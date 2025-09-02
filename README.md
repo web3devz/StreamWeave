@@ -1,9 +1,8 @@
-# StreamWeave — Wave 1 Submission
+# StreamWeave
 **Programmable Streaming + Storage Rails for Creators**
 
 *Tagline: "Stream It. Own It. Earn It."*
 
----
 
 ## 1. Project Overview
 
@@ -28,7 +27,6 @@ While Filecoin has established itself as the premier decentralized storage netwo
 
 This positions Filecoin as the foundational layer for the **$180B creator economy**, moving beyond enterprise storage into consumer-facing applications that generate consistent demand for Filecoin services.
 
----
 
 ## 2. Problem Definition & Clarity (20%)
 
@@ -68,8 +66,6 @@ The current creator economy is fundamentally broken, extracting value from creat
 - **$12B in creator tools funding** (2022-2023) signals massive market demand
 
 The timing is perfect: creators are actively seeking alternatives, consumers want more direct creator support, and Web3 infrastructure has matured enough to support real-world applications.
-
----
 
 ## 3. Solution & Value Proposition (25%)
 
@@ -148,8 +144,6 @@ StreamWeave leverages Filecoin's storage network to create the first fully-decen
 - Multi-language support and localized payment methods
 - Compliance with international creator tax regulations
 - 24/7 creator support in 12 languages
-
----
 
 ## 4. Technical Design & Architecture (30%)
 
@@ -312,7 +306,6 @@ Predictive analytics for content scheduling
 - **Insurance Coverage:** Creator content and earnings protected by decentralized insurance protocols
 - **Regulatory Compliance:** AML/KYC integration for creators earning >$600 annually
 
----
 
 ## 5. Alignment & Ambition (15%)
 
@@ -595,7 +588,6 @@ const payment = StreamWeave.pay(creator, {
 
 This feedback will help optimize StreamWeave's development process while contributing valuable insights back to the Filecoin ecosystem for future creator economy applications.
 
----
 
 ## Conclusion
 
@@ -606,8 +598,3 @@ StreamWeave represents the next evolution of the creator economy: **true creator
 StreamWeave will position Filecoin as **the creator-first cloud**, expanding its utility from enterprise storage into the consumer creator economy while generating consistent demand for Filecoin services.
 
 *Ready to revolutionize how creators own their work and earnings. Ready to build the future of content creation on Filecoin.*
-
----
-
-**Project Repository:** [StreamWeave GitHub](https://github.com/sambitsargam/StreamWeave)  
-**Contact:** [Email](mailto:hello@streamweave.xyz) | [Twitter](https://twitter.com/streamweave) | [Discord](https://discord.gg/streamweave)
