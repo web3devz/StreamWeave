@@ -1,95 +1,45 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { StreamWeaveCore } from '@/core/streamweave-core'
+// import { FilecoinClient } from '../../core/filecoin-client'
 
-// Mock Filecoin integration (would use actual services in production)
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const { streamId, creatorAddress, title, description } = await request.json()
-
-    // Initialize StreamWeave core with Filecoin integration
-    const streamweave = new StreamWeaveCore({
-      rpcUrl: process.env.FILECOIN_RPC_URL || 'https://api.node.glif.io/rpc/v1',
-      lotusEndpoint: process.env.LOTUS_ENDPOINT,
-      lotusToken: process.env.LOTUS_TOKEN
-    })
-
-    // Setup streaming infrastructure
-    const deliveryConfig = await streamweave.setupStreamDelivery(streamId)
-
-    // Create mock stream data
-    const streamData = {
-      id: streamId,
-      title,
-      description,
-      creator: creatorAddress,
-      status: 'live' as const,
-      startTime: new Date(),
-      viewerCount: 0,
-      earnings: 0,
-      streamUrl: deliveryConfig.streamUrl,
-      paymentChannels: []
+    const { streamId, title, quality } = await req.json()
+    
+    // Initialize Filecoin client (disabled for now)
+    // const filecoin = new FilecoinClient({
+    //   network: 'calibration',
+    //   rpcUrl: process.env.LOTUS_ENDPOINT
+    // })
+    
+    // For MVP, return simulated delivery config
+    const deliveryConfig = {
+      streamUrl: `https://cdn.streamweave.xyz/live/${streamId}/index.m3u8`,
+      edgeLocations: [
+        { id: 'us-east-1', region: 'US East', latency: 50, capacity: 1000 }
+      ],
+      adaptiveBitrates: ['360p', '480p', '720p', '1080p'],
+      latencyTarget: '<3s',
+      slaGuarantee: '99.9%'
     }
-
-    return NextResponse.json({
-      success: true,
-      data: {
-        stream: streamData,
-        deliveryConfig,
-        message: 'Stream initialized successfully with Filecoin infrastructure'
-      }
+    
+    return NextResponse.json({ 
+      success: true, 
+      deliveryConfig,
+      streamId 
     })
-
+    
   } catch (error) {
-    console.error('Stream initialization error:', error)
-    return NextResponse.json({
-      success: false,
-      error: 'Failed to initialize stream'
-    }, { status: 500 })
+    console.error('Stream setup error:', error)
+    return NextResponse.json(
+      { error: 'Failed to setup stream' },
+      { status: 500 }
+    )
   }
 }
 
-export async function GET(request: NextRequest) {
-  try {
-    const url = new URL(request.url)
-    const creatorId = url.searchParams.get('creatorId')
-
-    // Mock stream data (would fetch from database in production)
-    const mockStreams = [
-      {
-        id: '1',
-        creatorId: creatorId || 'demo-creator',
-        title: 'Building DeFi Protocols: Live Coding Session',
-        description: 'Deep dive into smart contract development',
-        status: 'live',
-        viewerCount: 342,
-        earnings: 127.50,
-        startTime: new Date().toISOString(),
-        category: 'Education',
-        tags: ['DeFi', 'Solidity', 'Coding'],
-        filecoinIntegration: {
-          storageStatus: 'active',
-          archivedSize: '2.3 TB',
-          activeDials: 12,
-          replication: '3x',
-          paymentChannels: 18,
-          avgRevenuePerMinute: 0.37
-        }
-      }
-    ]
-
-    return NextResponse.json({
-      success: true,
-      data: {
-        streams: mockStreams,
-        totalCount: mockStreams.length
-      }
-    })
-
-  } catch (error) {
-    console.error('Fetch streams error:', error)
-    return NextResponse.json({
-      success: false,
-      error: 'Failed to fetch streams'
-    }, { status: 500 })
-  }
+export async function GET() {
+  return NextResponse.json({ 
+    message: 'StreamWeave API - Streaming endpoint',
+    version: '1.0.0'
+  })
 }

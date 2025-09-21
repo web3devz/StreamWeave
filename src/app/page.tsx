@@ -1,9 +1,9 @@
-import CreatorDashboard from '@/components/CreatorDashboard'
+import Dashboard from '../components/Dashboard-simple'
 
 export default function Home() {
   return (
     <main>
-      <CreatorDashboard />
+      <Dashboard />
     </main>
   )
 }

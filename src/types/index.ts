@@ -1,10 +1,10 @@
 // Type definitions for StreamWeave platform
 
 export interface StreamWeaveConfig {
-  lotusEndpoint?: string
-  lotusToken?: string
-  rpcUrl: string
-  ipfsEndpoint?: string
+  network?: 'mainnet' | 'calibration'
+  rpcUrl?: string
+  ipfsProjectId?: string
+  ipfsProjectSecret?: string
 }
 
 export interface StreamData {

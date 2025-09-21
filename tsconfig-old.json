@@ -4,30 +4,25 @@
     "lib": ["dom", "dom.iterable", "es6"],
     "allowJs": true,
     "skipLibCheck": true,
+    "strict": true,
+    "noEmit": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": false,
-    "declaration": false,
     "jsx": "react-jsx",
+    "types": ["node", "webpack-env"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
-    },
-    "types": ["node", "webpack-env"]
+      "@/*": ["./src/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/core/*": ["./src/core/*"],
+      "@/types/*": ["./src/types/*"]
+    }
   },
-  "include": [
-    "src/**/*",
-    "src/**/*.tsx",
-    "src/**/*.ts"
-  ],
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src/**/*", "contracts/**/*", "global.d.ts"],
+  "exclude": ["node_modules", "dist", "build"]
 }

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>StreamWeave - Decentralized Live Streaming Platform</title>
+  <meta name="description" content="StreamWeave: Revolutionary live streaming platform powered by Filecoin and IPFS. True decentralization, creator ownership, and direct monetization.">
+  <meta name="keywords" content="streaming, decentralized, filecoin, ipfs, web3, crypto, content creation">
+  
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="StreamWeave - Decentralized Live Streaming">
+  <meta property="og:description" content="Revolutionary live streaming platform powered by Filecoin and IPFS">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://streamweave.xyz">
+  <meta property="og:image" content="https://streamweave.xyz/og-image.png">
+  
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@StreamWeave">
+  <meta name="twitter:title" content="StreamWeave - Decentralized Live Streaming">
+  <meta name="twitter:description" content="Revolutionary live streaming platform powered by Filecoin and IPFS">
+  <meta name="twitter:image" content="https://streamweave.xyz/twitter-image.png">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" href="/favicon.png">
+  
+  <!-- Preload important resources -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Preload critical APIs -->
+  <link rel="dns-prefetch" href="//api.node.glif.io">
+  <link rel="dns-prefetch" href="//ipfs.infura.io">
+  
+  <style>
+    /* Critical CSS for loading state */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      color: white;
+      overflow-x: hidden;
+    }
+    
+    #root {
+      min-height: 100vh;
+    }
+    
+    /* Loading animation */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .loading-logo {
+      font-size: 3rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #FFD700, #FFA500);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 20px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    
+    .loading-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-top: 3px solid #FFD700;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    .loading-text {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      opacity: 0.8;
+      animation: fadeInOut 2s ease-in-out infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.7; }
+    }
+    
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.5; }
+      50% { opacity: 1; }
+    }
+    
+    /* Hide loading when app loads */
+    .app-loaded .loading-container {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Loading screen -->
+  <div id="loading" class="loading-container">
+    <div class="loading-logo">StreamWeave</div>
+    <div class="loading-spinner"></div>
+    <div class="loading-text">Connecting to Filecoin Network...</div>
+  </div>
+  
+  <!-- React app container -->
+  <div id="root"></div>
+  
+  <!-- Service Worker Registration -->
+  <script>
+    // Register service worker for PWA capabilities
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('SW registered: ', registration);
+          })
+          .catch(registrationError => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      });
+    }
+    
+    // Hide loading screen when React app loads
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const loading = document.getElementById('loading');
+        if (loading) {
+          loading.style.opacity = '0';
+          loading.style.transition = 'opacity 0.5s ease';
+          setTimeout(() => {
+            loading.style.display = 'none';
+            document.body.classList.add('app-loaded');
+          }, 500);
+        }
+      }, 2000);
+    });
+    
+    // Global error handler
+    window.addEventListener('error', (event) => {
+      console.error('Global error:', event.error);
+      // Could send to analytics service
+    });
+    
+    // Unhandled promise rejection handler
+    window.addEventListener('unhandledrejection', (event) => {
+      console.error('Unhandled promise rejection:', event.reason);
+      // Could send to analytics service
+    });
+    
+    // Web3 provider detection
+    window.addEventListener('load', () => {
+      if (typeof window.ethereum !== 'undefined') {
+        console.log('MetaMask detected');
+      } else {
+        console.log('No Web3 wallet detected');
+      }
+    });
+  </script>
+  
+  <!-- Analytics and monitoring (placeholder) -->
+  <script>
+    // Google Analytics or similar would go here
+    // window.dataLayer = window.dataLayer || [];
+    // function gtag(){dataLayer.push(arguments);}
+    // gtag('js', new Date());
+    // gtag('config', 'GA_MEASUREMENT_ID');
+  </script>
+  
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "StreamWeave",
+    "description": "Decentralized live streaming platform powered by Filecoin and IPFS",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Web",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "aggregateRating": {
+      "@type": "AggregateRating",
+      "ratingValue": "5",
+      "ratingCount": "1"
+    },
+    "author": {
+      "@type": "Organization",
+      "name": "StreamWeave Team"
+    }
+  }
+  </script>
+</body>
+</html>
